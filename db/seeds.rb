@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+7.times do |i|
+  puts "start create #{i} genre"
+  genre = Genre.create!(name: Faker::Book.genre)
+  puts "create genre id: #{genre.id}, name: #{genre.name}"
+end
