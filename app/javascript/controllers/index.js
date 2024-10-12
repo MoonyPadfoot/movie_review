@@ -5,4 +5,8 @@
 import { application } from "./application"
 
 import HelloController from "./hello_controller"
+
+import Select2 from "./select2_controller"
+
 application.register("hello", HelloController)
+application.register("select2", Select2)
