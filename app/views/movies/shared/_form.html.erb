@@ -3,69 +3,67 @@
   <div class="my-2">
     <div class="form-floating">
       <%= form.text_field :title, class: "form-control", placeholder: "Title" %>
-      <%= form.label :title, class: "form-label" %>
+      <%= form.label :title, class: "form-label" unless @movie.errors[:title].present? %>
+      <% @movie.errors.full_messages_for(:title).each do |message| %>
+        <div class="text-danger"><%= message %></div>
+      <% end %>
     </div>
-
-    <% @movie.errors.full_messages_for(:title).each do |message| %>
-      <div class="text-danger"><%= message %></div>
-    <% end %>
   </div>
 
   <div class="my-2">
     <div class="form-floating">
       <%= form.text_area :blurb, class: "form-control", style: "height: 150px;", placeholder: "Enter synopsis here" %>
-      <%= form.label :blurb, "Enter synopsis here", class: "form-label" %>
+      <%= form.label :blurb, "Enter synopsis here", class: "form-label" unless @movie.errors[:blurb].present? %>
+      <% @movie.errors.full_messages_for(:blurb).each do |message| %>
+        <div class="text-danger"><%= message %></div>
+      <% end %>
     </div>
-
-    <% @movie.errors.full_messages_for(:blurb).each do |message| %>
-      <div class="text-danger"><%= message %></div>
-    <% end %>
   </div>
 
   <div class="my-2">
     <div class="form-floating">
       <%= form.date_field :date_released, class: "form-control", placeholder: "Released Date" %>
-      <%= form.label :date_released, class: "form-label" %>
+      <%= form.label :date_released, class: "form-label" unless @movie.errors[:date_released].present? %>
+      <% @movie.errors.full_messages_for(:date_released).each do |message| %>
+        <div class="text-danger"><%= message %></div>
+      <% end %>
     </div>
-
-    <% @movie.errors.full_messages_for(:date_released).each do |message| %>
-      <div class="text-danger"><%= message %></div>
-    <% end %>
   </div>
 
   <div class="my-2">
     <div class="form-floating">
       <%= form.text_field :country_of_origin, class: "form-control", placeholder: "Country Origin" %>
-      <%= form.label :country_of_origin, class: "form-label" %>
+      <%= form.label :country_of_origin, class: "form-label" unless @movie.errors[:country_of_origin].present? %>
+      <% @movie.errors.full_messages_for(:country_of_origin).each do |message| %>
+        <div class="text-danger"><%= message %></div>
+      <% end %>
     </div>
-
-    <% @movie.errors.full_messages_for(:country_of_origin).each do |message| %>
-      <div class="text-danger"><%= message %></div>
-    <% end %>
   </div>
 
   <div class="row">
     <div class="col">
       <div class="form-floating">
         <%= form.date_field :showing_start, class: "form-control", placeholder: "Showing Start" %>
-        <%= form.label :showing_start, class: "form-label" %>
+        <%= form.label :showing_start, class: "form-label" unless @movie.errors[:showing_start].present? %>
+        <% @movie.errors.full_messages_for(:showing_start).each do |message| %>
+          <div class="text-danger"><%= message %></div>
+        <% end %>
       </div>
-
-      <% @movie.errors.full_messages_for(:showing_start).each do |message| %>
-        <div class="text-danger"><%= message %></div>
-      <% end %>
     </div>
 
     <div class="col">
       <div class="form-floating">
         <%= form.date_field :showing_end, class: "form-control", placeholder: "Showing End" %>
-        <%= form.label :showing_end, class: "form-label" %>
+        <%= form.label :showing_end, class: "form-label" unless @movie.errors[:showing_end].present? %>
+        <% @movie.errors.full_messages_for(:showing_end).each do |message| %>
+          <div class="text-danger"><%= message %></div>
+        <% end %>
       </div>
-
-      <% @movie.errors.full_messages_for(:showing_end).each do |message| %>
-        <div class="text-danger"><%= message %></div>
-      <% end %>
     </div>
+  </div>
+
+  <div class="my-3">
+    <%= form.submit class: 'btn btn-lg btn-success w-100' %>
   </div>
 
 <% end %>
