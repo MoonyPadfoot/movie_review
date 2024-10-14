@@ -3,6 +3,7 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
+                .includes(:genres).page(params[:page]).per(12)
   end
 
   def show; end
@@ -26,6 +27,6 @@ class MoviesController < ApplicationController
   def edit; end
 
   def movie_params
-    params.require(:movie).permit(:title, :blurb, :date_released, :country_of_origin, :showing_start, :showing_end)
+    params.require(:movie).permit(:title, :blurb, :date_released, :country_of_origin, :showing_start, :showing_end, genre_ids: [])
   end
 end
