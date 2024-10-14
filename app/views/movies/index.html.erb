@@ -1,0 +1,34 @@
+<div class="container py-3">
+  <div class="container-fluid">
+    <div class="row row-cols-4 g-4">
+
+      <% @movies.each do |movie| %>
+
+        <div class="col">
+          <div class="card shadow p-4 h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title text-center"><%= movie.title %></h3>
+              <h6 class="card-subtitle mt-2 text-body-secondary text-center"><%= movie.blurb %></h6>
+            </div>
+            <hr>
+            <div>
+              <p class="fw-semibold mb-0 d-inline">Country:</p>
+              <p class="mb-0 d-inline"><%= movie.country_of_origin %></p>
+            </div>
+            <div>
+              <p class="fw-semibold mb-0 d-inline">Date Released:</p>
+              <p class="mb-0 d-inline"><%= movie.date_released.strftime("%B %d, %Y") %></p>
+            </div>
+            <div>
+              <p class="fw-semibold mb-0 d-inline">Screening Span:</p>
+              <p class="mb-0"><%= movie.showing_start.strftime("%B %d") + ' - ' + movie.showing_end.strftime("%B %d, %Y")%></p>
+            </div>
+
+          </div>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+
+</div>
