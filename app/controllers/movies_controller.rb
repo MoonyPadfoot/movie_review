@@ -3,7 +3,7 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
-                .includes(:genres).page(params[:page]).per(12)
+                .includes(:genres).page(params[:page]).per(1)
   end
 
   def show; end
