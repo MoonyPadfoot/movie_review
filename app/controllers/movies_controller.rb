@@ -26,6 +26,12 @@ class MoviesController < ApplicationController
 
   def edit; end
 
+  private
+
+  def set_movie
+    @movie = Movie.find(params[:id])
+  end
+
   def movie_params
     params.require(:movie).permit(:title, :blurb, :date_released, :country_of_origin, :showing_start, :showing_end, genre_ids: [])
   end
