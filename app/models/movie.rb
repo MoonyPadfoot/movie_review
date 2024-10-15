@@ -11,4 +11,18 @@ class Movie < ApplicationRecord
   has_many :reviews, dependent: :destroy
   belongs_to :user
 
+  scope :filter_by_title, ->(title) { where('title LIKE ?', "%#{title}%") if title.present? && title != "" }
+  scope :filter_by_genre, ->(genre_ids) { genre_ids.blank? ? all : joins(:genres).where(genres: { id: genre_ids }) }
+  scope :filter_by_status, ->(status) {
+    case status
+    when showing
+      where("CURRENT_DATE BETWEEN showing_start AND showing_end")
+    when soon
+      where("CURRENT_DATE < showing_start")
+    when showing
+      where("CURRENT_DATE > showing_end")
+    end
+  }
+
+  enum role: { showing: "SHOWING", soon: "SOON", screened: "SCREENED" }
 end

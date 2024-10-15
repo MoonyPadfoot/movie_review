@@ -1,40 +1,41 @@
 <div class="container py-3 px-5">
-    <div class="row row-cols-4 g-4">
+  <%= render 'movies/shared/filter' %>
+  <div class="row row-cols-4 g-4">
 
-      <% @movies.each do |movie| %>
+    <% @movies.each do |movie| %>
 
-        <div class="col">
-          <%= link_to movie, class: "text-decoration-none" do %>
-            <div class="card shadow p-4 h-100">
-              <div class="card-body text-center">
-                <h3 class="card-title text-center"><%= movie.title %></h3>
-                <h6 class="card-subtitle mt-2 text-body-secondary text-center mb-2"><%= movie.blurb %></h6>
-                <% movie.genres.each do |genre| %>
-                  <div class="d-inline">
-                    <span class="badge bg-primary"><%= genre.name %></span>
-                  </div>
-                <% end %>
-              </div>
-              <hr class="mb-2 mt-0">
-              <div>
-                <p class="fw-semibold mb-0 d-inline">Country:</p>
-                <p class="mb-0 d-inline"><%= movie.country_of_origin %></p>
-              </div>
-              <div>
-                <p class="fw-semibold mb-0 d-inline">Date Released:</p>
-                <p class="mb-0 d-inline"><%= movie.date_released.strftime("%B %d, %Y") %></p>
-              </div>
-              <div>
-                <p class="fw-semibold mb-0 d-inline">Screening Span:</p>
-                <p class="mb-0"><%= movie.showing_start.strftime("%B %d") + ' - ' + movie.showing_end.strftime("%B %d, %Y") %></p>
-              </div>
+      <div class="col">
+        <%= link_to movie, class: "text-decoration-none" do %>
+          <div class="card shadow p-4 h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title text-center"><%= movie.title %></h3>
+              <h6 class="card-subtitle mt-2 text-body-secondary text-center mb-2"><%= movie.blurb %></h6>
+              <% movie.genres.each do |genre| %>
+                <div class="d-inline">
+                  <span class="badge bg-primary"><%= genre.name %></span>
+                </div>
+              <% end %>
             </div>
-          <% end %>
-        </div>
+            <hr class="mb-2 mt-0">
+            <div>
+              <p class="fw-semibold mb-0 d-inline">Country:</p>
+              <p class="mb-0 d-inline"><%= movie.country_of_origin %></p>
+            </div>
+            <div>
+              <p class="fw-semibold mb-0 d-inline">Date Released:</p>
+              <p class="mb-0 d-inline"><%= movie.date_released.strftime("%B %d, %Y") %></p>
+            </div>
+            <div>
+              <p class="fw-semibold mb-0 d-inline">Screening Span:</p>
+              <p class="mb-0"><%= movie.showing_start.strftime("%B %d") + ' - ' + movie.showing_end.strftime("%B %d, %Y") %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
 
-      <% end %>
+    <% end %>
 
-    </div>
-    <%= paginate @movies %>
+  </div>
+  <%= paginate @movies %>
 
 </div>

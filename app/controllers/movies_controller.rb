@@ -4,6 +4,10 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
                    .includes(:genres).page(params[:page]).per(1)
+                   .filter_by_title(params[:title])
+                   .filter_by_status(params[:status])
+                   .filter_by_genre(params[:genre_ids])
+
   end
 
   def show
