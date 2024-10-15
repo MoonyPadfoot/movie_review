@@ -10,6 +10,10 @@
             <span class="badge bg-primary"><%= genre.name %></span>
           </div>
         <% end %>
+        <div>
+          <p class="fw-semibold mb-0 d-inline">Rating:</p>
+          <p class="mb-0 d-inline"><%= @movie.reviews.average(:rating) %></p>
+        </div>
       </div>
 
       <hr>
@@ -41,15 +45,13 @@
                  }
       %>
 
-      <hr class="mt-5">
-
-      <div>
-        <p class="fw-semibold">Username</p>
-        <p>1/5</p>
-        <p>Lorem ipsum dolor sit amet</p>
-      </div>
-
-      <hr>
+      <%= render partial: 'reviews/shared/index',
+                 locals: {
+                   movie: @movie,
+                   reviews: @reviews,
+                   path: movie_reviews_path(@movie)
+                 }
+      %>
 
     </div>
   </div>
