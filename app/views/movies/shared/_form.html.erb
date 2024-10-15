@@ -66,6 +66,10 @@
     </div>
   </div>
 
+  <% @movie.errors.full_messages_for(:user).each do |message| %>
+    <div class="text-danger"><%= message %></div>
+  <% end %>
+
   <div class="my-3">
     <%= form.submit class: 'btn btn-lg btn-success w-100' %>
   </div>
