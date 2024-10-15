@@ -8,6 +8,7 @@ class MoviesController < ApplicationController
 
   def show
     @review = @movie.reviews.new
+    @reviews = @movie.reviews.order(rating: :desc)
   end
 
   def new
