@@ -1,5 +1,5 @@
 <div class="container py-3 px-5">
-  <div class="card h-100">
+  <div class="card h-100 p-2">
     <div class="card-body text-center">
       <h1 class="card-title text-center"><%= @movie.title %></h1>
       <h5 class="card-subtitle mt-2 text-body-secondary text-center"><%= @movie.blurb %></h5>
@@ -29,9 +29,29 @@
     </div>
   </div>
 
-  <div class="card h-100 mt-2">
+  <div class="card h-100 mt-2 p-2">
     <div class="card-body">
       <h4>Reviews</h4>
+
+      <%= render partial: 'reviews/shared/form',
+                 locals: {
+                   movie: @movie,
+                   review: @review,
+                   path: movie_reviews_path(@movie)
+                 }
+      %>
+
+      <hr class="mt-5">
+
+      <div>
+        <p class="fw-semibold">Username</p>
+        <p>1/5</p>
+        <p>Lorem ipsum dolor sit amet</p>
+      </div>
+
+      <hr>
+
     </div>
   </div>
+
 </div>

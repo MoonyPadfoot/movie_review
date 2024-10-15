@@ -3,10 +3,12 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
-                .includes(:genres).page(params[:page]).per(1)
+                   .includes(:genres).page(params[:page]).per(1)
   end
 
-  def show; end
+  def show
+    @review = @movie.reviews.new
+  end
 
   def new
     @movie = Movie.new
@@ -30,6 +32,10 @@ class MoviesController < ApplicationController
 
   def set_movie
     @movie = Movie.find(params[:id])
+  end
+
+  def set_review
+    @review = @movie.reviews.find(params[:id])
   end
 
   def movie_params
