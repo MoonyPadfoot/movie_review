@@ -1,0 +1,16 @@
+<div class="container d-flex justify-content-center pt-3">
+  <div class="card shadow w-50 p-4">
+    <%= form_with model: @review, url: movie_review_path(@movie, @review) do |form| %>
+      <div class="my-2">
+        <%= form.text_area :content, class: "form-control", style: "height: 150px;", placeholder: "Add a comment..." %>
+      </div>
+      <% @review.errors.full_messages_for(:content).each do |message| %>
+        <div class="text-danger"><%= message %></div>
+      <% end %>
+
+      <div class="my-3 d-flex justify-content-end">
+        <%= form.submit 'Add comment', class: 'btn btn-md btn-success' %>
+      </div>
+    <% end %>
+  </div>
+</div>
