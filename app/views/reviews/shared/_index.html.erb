@@ -1,5 +1,15 @@
 <% reviews.each do |review| %>
-  <%= link_to edit_movie_review_path(@movie, review), class: "text-decoration-none" do %>
+  <% if user_signed_in? && review.user == current_user %>
+    <%= link_to edit_movie_review_path(@movie, review), class: "text-decoration-none" do %>
+      <hr class="mt-5">
+      <div>
+        <p class="fw-semibold mb-0"><%= review.user.username %></p>
+        <p><%= review.rating %>/5</p>
+        <p><%= review.content %></p>
+      </div>
+      <hr>
+    <% end %>
+  <% else %>
     <hr class="mt-5">
     <div>
       <p class="fw-semibold mb-0"><%= review.user.username %></p>
@@ -8,4 +18,5 @@
     </div>
     <hr>
   <% end %>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "btn btn-danger" %>
 <% end %>
