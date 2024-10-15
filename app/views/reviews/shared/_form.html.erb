@@ -12,6 +12,9 @@
   <% @review.errors.full_messages_for(:content).each do |message| %>
     <div class="text-danger"><%= message %></div>
   <% end %>
+  <% @review.errors.full_messages_for(:user).each do |message| %>
+    <div class="text-danger"><%= message %></div>
+  <% end %>
 
   <div class="my-3 d-flex justify-content-end">
     <%= form.submit 'Add comment', class: 'btn btn-md btn-success' %>

@@ -45,13 +45,15 @@
                  }
       %>
 
-      <%= render partial: 'reviews/shared/index',
-                 locals: {
-                   movie: @movie,
-                   reviews: @reviews,
-                   path: movie_reviews_path(@movie)
-                 }
-      %>
+      <% if @reviews.present? %>
+        <%= render partial: 'reviews/shared/index',
+                   locals: {
+                     movie: @movie,
+                     reviews: @reviews,
+                     path: movie_reviews_path(@movie)
+                   }
+        %>
+      <% end %>
 
     </div>
   </div>

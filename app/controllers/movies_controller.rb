@@ -7,7 +7,7 @@ class MoviesController < ApplicationController
                    .filter_by_title(params[:title])
                    .filter_by_status(params[:status])
                    .filter_by_genre(params[:genre_ids])
-
+                   .order_by_rating
   end
 
   def show

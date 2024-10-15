@@ -15,14 +15,19 @@ class Movie < ApplicationRecord
   scope :filter_by_genre, ->(genre_ids) { genre_ids.blank? ? all : joins(:genres).where(genres: { id: genre_ids }) }
   scope :filter_by_status, ->(status) {
     case status
-    when showing
+    when "SHOWING"
       where("CURRENT_DATE BETWEEN showing_start AND showing_end")
-    when soon
+    when "SOON"
       where("CURRENT_DATE < showing_start")
-    when showing
+    when "SCREENED"
       where("CURRENT_DATE > showing_end")
     end
   }
+  scope :order_by_rating, -> {
+    left_joins(:reviews)
+      .select('movies.*, COALESCE(AVG(reviews.rating), 0) AS average_rating')
+      .group('movies.id')
+      .order('average_rating DESC')
+  }
 
-  enum role: { showing: "SHOWING", soon: "SOON", screened: "SCREENED" }
 end
