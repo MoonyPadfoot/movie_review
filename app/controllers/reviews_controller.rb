@@ -8,10 +8,10 @@ class ReviewsController < ApplicationController
 
   def create
     @review = @movie.reviews.new(review_params)
-
+    @review.user = current_user
     if @review.save
       flash[:notice] = 'Comment created successfully'
-      redirect_to movie_reviews_path(@movie)
+      redirect_to movie_path(@movie)
     else
       render 'movies/show'
     end
