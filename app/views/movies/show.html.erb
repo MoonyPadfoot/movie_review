@@ -1,37 +1,75 @@
 <div class="container py-3 px-5">
-  <div class="card h-100 p-2">
-    <div class="card-body text-center">
-      <h1 class="card-title text-center"><%= @movie.title %></h1>
-      <h5 class="card-subtitle mt-2 text-body-secondary text-center"><%= @movie.blurb %></h5>
+  <% if user_signed_in? && @movie.user == current_user %>
+    <%= link_to edit_movie_path(@movie), class: "text-decoration-none" do %>
+      <div class="card h-100 p-2">
+        <div class="card-body text-center">
+          <h1 class="card-title text-center"><%= @movie.title %></h1>
+          <h5 class="card-subtitle mt-2 text-body-secondary text-center"><%= @movie.blurb %></h5>
 
-      <div class="row g-2 d-flex justify-content-center mt-2">
-        <% @movie.genres.each do |genre| %>
-          <div class="col-auto">
-            <span class="badge bg-primary"><%= genre.name %></span>
+          <div class="row g-2 d-flex justify-content-center mt-2">
+            <% @movie.genres.each do |genre| %>
+              <div class="col-auto">
+                <span class="badge bg-primary"><%= genre.name %></span>
+              </div>
+            <% end %>
+            <div>
+              <p class="fw-semibold mb-0 d-inline">Rating:</p>
+              <p class="mb-0 d-inline"><%= @movie.reviews.average(:rating) %></p>
+            </div>
           </div>
-        <% end %>
-        <div>
-          <p class="fw-semibold mb-0 d-inline">Rating:</p>
-          <p class="mb-0 d-inline"><%= @movie.reviews.average(:rating) %></p>
+
+          <hr>
+
+          <div>
+            <p class="fw-semibold mb-0 d-inline">Country:</p>
+            <p class="mb-0 d-inline"><%= @movie.country_of_origin %></p>
+          </div>
+          <div>
+            <p class="fw-semibold mb-0 d-inline">Date Released:</p>
+            <p class="mb-0 d-inline"><%= @movie.date_released.strftime("%B %d, %Y") %></p>
+          </div>
+          <div>
+            <p class="fw-semibold mb-0 d-inline">Screening Span:</p>
+            <p class="mb-0 d-inline"><%= @movie.showing_start.strftime("%B %d") + ' - ' + @movie.showing_end.strftime("%B %d, %Y") %></p>
+          </div>
         </div>
       </div>
+    <% end %>
+  <% else %>
+    <div class="card h-100 p-2">
+      <div class="card-body text-center">
+        <h1 class="card-title text-center"><%= @movie.title %></h1>
+        <h5 class="card-subtitle mt-2 text-body-secondary text-center"><%= @movie.blurb %></h5>
 
-      <hr>
+        <div class="row g-2 d-flex justify-content-center mt-2">
+          <% @movie.genres.each do |genre| %>
+            <div class="col-auto">
+              <span class="badge bg-primary"><%= genre.name %></span>
+            </div>
+          <% end %>
+          <div>
+            <p class="fw-semibold mb-0 d-inline">Rating:</p>
+            <p class="mb-0 d-inline"><%= @movie.reviews.average(:rating) %></p>
+          </div>
+        </div>
 
-      <div>
-        <p class="fw-semibold mb-0 d-inline">Country:</p>
-        <p class="mb-0 d-inline"><%= @movie.country_of_origin %></p>
-      </div>
-      <div>
-        <p class="fw-semibold mb-0 d-inline">Date Released:</p>
-        <p class="mb-0 d-inline"><%= @movie.date_released.strftime("%B %d, %Y") %></p>
-      </div>
-      <div>
-        <p class="fw-semibold mb-0 d-inline">Screening Span:</p>
-        <p class="mb-0 d-inline"><%= @movie.showing_start.strftime("%B %d") + ' - ' + @movie.showing_end.strftime("%B %d, %Y") %></p>
+        <hr>
+
+        <div>
+          <p class="fw-semibold mb-0 d-inline">Country:</p>
+          <p class="mb-0 d-inline"><%= @movie.country_of_origin %></p>
+        </div>
+        <div>
+          <p class="fw-semibold mb-0 d-inline">Date Released:</p>
+          <p class="mb-0 d-inline"><%= @movie.date_released.strftime("%B %d, %Y") %></p>
+        </div>
+        <div>
+          <p class="fw-semibold mb-0 d-inline">Screening Span:</p>
+          <p class="mb-0 d-inline"><%= @movie.showing_start.strftime("%B %d") + ' - ' + @movie.showing_end.strftime("%B %d, %Y") %></p>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 
   <div class="card h-100 mt-2 p-2">
     <div class="card-body">
