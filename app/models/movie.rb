@@ -23,7 +23,7 @@ class Movie < ApplicationRecord
   end
 
   scope :filter_by_title, ->(title) { where('title LIKE ?', "%#{title}%") if title.present? && title != "" }
-  scope :filter_by_genre, ->(genre_ids) { genre_ids.present? ? all : joins(:genres).where(genres: { id: genre_ids }) }
+  scope :filter_by_genre, ->(genre_ids) { joins(:genres).where(genres: { id: genre_ids }) if genre_ids.present? }
   scope :filter_by_status, ->(status) {
     case status
     when "SHOWING"
