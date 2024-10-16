@@ -44,6 +44,12 @@ class MoviesController < ApplicationController
     end
   end
 
+  def destroy
+    @movie.destroy
+    flash[:notice] = 'Movie deleted successfully'
+    redirect_to movie_path(@movie)
+  end
+
   private
 
   def set_movie
@@ -55,6 +61,6 @@ class MoviesController < ApplicationController
   end
 
   def movie_params
-    params.require(:movie).permit(:title, :blurb, :date_released, :country_of_origin, :showing_start, :showing_end, genre_ids: [])
+    params.require(:movie).permit(:title, :blurb, :date_released, :country_of_origin, :showing_start, :showing_end, :slug, genre_ids: [])
   end
 end

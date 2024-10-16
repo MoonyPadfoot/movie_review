@@ -1,6 +1,6 @@
 class Movie < ApplicationRecord
   default_scope { where(deleted_at: nil) }
-  before_create :generate_slug
+  before_save :generate_slug
 
   def to_param
     slug
@@ -19,7 +19,7 @@ class Movie < ApplicationRecord
   belongs_to :user
 
   def destroy
-    update(deleted_at: Time.now)
+    update(deleted_at: Time.current)
   end
 
   scope :filter_by_title, ->(title) { where('title LIKE ?', "%#{title}%") if title.present? && title != "" }
@@ -52,8 +52,8 @@ class Movie < ApplicationRecord
 
   def generate_slug
     begin
-      self.slug = SecureRandom.urlsafe_base64(5) if Movie.exists?(slug: slug)
-    end
+      self.slug = SecureRandom.urlsafe_base64(5)
+    end while Movie.exists?(slug: slug)
   end
 
 end
