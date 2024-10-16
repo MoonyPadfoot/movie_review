@@ -14,7 +14,7 @@
             <% end %>
             <div>
               <p class="fw-semibold mb-0 d-inline">Rating:</p>
-              <p class="mb-0 d-inline"><%= @movie.reviews.average(:rating) %></p>
+              <p class="mb-0 d-inline"><%=  @movie.reviews.average(:rating) || 'no reviews available' %></p>
             </div>
           </div>
 
@@ -84,7 +84,7 @@
       %>
 
       <% if @reviews.present? %>
-        <%= render partial: 'reviews/shared/index',
+        <%= render partial: 'reviews/shared/all_reviews',
                    locals: {
                      movie: @movie,
                      reviews: @reviews,

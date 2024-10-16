@@ -1,0 +1,19 @@
+<% reviews.each do |review| %>
+  <hr class="mt-5">
+  <% if user_signed_in? && review.user == current_user %>
+    <%= link_to edit_movie_review_path(@movie, review), class: "text-decoration-none" do %>
+      <div>
+        <p class="fw-semibold mb-0"><%= review.user.username %></p>
+        <p><%= review.rating %>/5</p>
+        <p><%= review.content %></p>
+      </div>
+    <% end %>
+  <% else %>
+    <div>
+      <p class="fw-semibold mb-0"><%= review.user.username %></p>
+      <p><%= review.rating %>/5</p>
+      <p><%= review.content %></p>
+    </div>
+  <% end %>
+
+<% end %>
