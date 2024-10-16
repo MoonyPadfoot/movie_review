@@ -20,7 +20,7 @@ class ReviewsController < ApplicationController
   def edit; end
 
   def update
-    if @review.update(review_params)
+    if @review.update(params.require(:review).permit(:content))
       flash[:notice] = 'Comment updated successfully'
       redirect_to movie_path(@movie)
     else
