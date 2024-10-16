@@ -9,8 +9,6 @@ class MoviesController < ApplicationController
                    .filter_by_status(params[:status])
                    .filter_by_genre(params[:genre_ids])
                    .page(params[:page]).per(1)
-
-    @top_movies.select { |movie| movie.id }
   end
 
   def show
@@ -35,6 +33,16 @@ class MoviesController < ApplicationController
   end
 
   def edit; end
+
+  def update
+    if @movie.update(movie_params)
+      flash[:notice] = 'Movie updated successfully!'
+      redirect_to movies_path
+    else
+      flash.now[:alert] = 'Movie update failed'
+      render :edit, status: :unprocessable_entity
+    end
+  end
 
   private
 
