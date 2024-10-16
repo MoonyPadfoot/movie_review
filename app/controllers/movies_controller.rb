@@ -39,7 +39,7 @@ class MoviesController < ApplicationController
   private
 
   def set_movie
-    @movie = Movie.find_by!(slug: params[:slug])
+    @movie = Movie.find_by!(slug: params[:slug]) || Movie.find(params[:id])
   end
 
   def set_review
