@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   devise_for :users
-  resources :movies do
+  resources :movies, param: :slug do
     resources :reviews
   end
 end

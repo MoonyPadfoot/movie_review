@@ -1,5 +1,10 @@
 class Movie < ApplicationRecord
   default_scope { where(deleted_at: nil) }
+  before_create :generate_slug
+
+  def to_param
+    slug
+  end
 
   validates :title, presence: true, length: { minimum: 3 }, uniqueness: true
   validates :blurb, presence: true, length: { minimum: 20 }
@@ -18,7 +23,7 @@ class Movie < ApplicationRecord
   end
 
   scope :filter_by_title, ->(title) { where('title LIKE ?', "%#{title}%") if title.present? && title != "" }
-  scope :filter_by_genre, ->(genre_ids) { genre_ids.blank? ? all : joins(:genres).where(genres: { id: genre_ids }) }
+  scope :filter_by_genre, ->(genre_ids) { genre_ids.present? ? all : joins(:genres).where(genres: { id: genre_ids }) }
   scope :filter_by_status, ->(status) {
     case status
     when "SHOWING"
@@ -42,4 +47,13 @@ class Movie < ApplicationRecord
       .order('average_rating DESC')
       .limit(3)
   }
+
+  private
+
+  def generate_slug
+    begin
+      self.slug = SecureRandom.urlsafe_base64(5) if Movie.exists?(slug: slug)
+    end
+  end
+
 end

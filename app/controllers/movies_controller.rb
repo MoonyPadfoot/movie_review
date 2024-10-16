@@ -3,12 +3,12 @@ class MoviesController < ApplicationController
 
   def index
     @top_movies = Movie.top_3_by_rating
-    @movies = Movie.all
-                   .includes(:genres).page(params[:page]).per(1)
+    @movies = Movie.includes(:genres)
+                   .order_by_rating
                    .filter_by_title(params[:title])
                    .filter_by_status(params[:status])
                    .filter_by_genre(params[:genre_ids])
-                   .order_by_rating
+                   .page(params[:page]).per(1)
 
     @top_movies.select { |movie| movie.id }
   end
@@ -39,7 +39,7 @@ class MoviesController < ApplicationController
   private
 
   def set_movie
-    @movie = Movie.find(params[:id])
+    @movie = Movie.find_by!(slug: params[:slug])
   end
 
   def set_review
