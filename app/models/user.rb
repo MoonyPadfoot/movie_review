@@ -6,8 +6,8 @@ class User < ApplicationRecord
 
   validates :username, uniqueness: true
 
-  has_many :movies
-  has_many :reviews
+  has_many :movies, dependent: :nullify
+  has_many :reviews, dependent: :nullify
 
   def email_required?
     false

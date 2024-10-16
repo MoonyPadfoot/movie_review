@@ -1,4 +1,6 @@
 class Movie < ApplicationRecord
+  default_scope { where(deleted_at: nil) }
+
   validates :title, presence: true, length: { minimum: 3 }, uniqueness: true
   validates :blurb, presence: true, length: { minimum: 20 }
   validates :date_released, presence: true, comparison: { less_than_or_equal_to: :showing_start }
@@ -10,6 +12,10 @@ class Movie < ApplicationRecord
   has_many :genres, through: :movie_genre_ships
   has_many :reviews, dependent: :destroy
   belongs_to :user
+
+  def destroy
+    update(deleted_at: Time.now)
+  end
 
   scope :filter_by_title, ->(title) { where('title LIKE ?', "%#{title}%") if title.present? && title != "" }
   scope :filter_by_genre, ->(genre_ids) { genre_ids.blank? ? all : joins(:genres).where(genres: { id: genre_ids }) }
