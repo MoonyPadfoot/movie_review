@@ -12,8 +12,8 @@
               <h6 class="card-subtitle mt-2 text-body-secondary text-center mb-2"><%= movie.blurb %></h6>
 
               <div>
-                <% if movie.respond_to?(:hot?) && movie.hot? %>
-                  <span style="color: red; font-weight: bold;">Hot!</span>
+                <% if @top_movies.find { |top| movie.id == top.id } %>
+                  <span class="badge bg-danger">Hot!</span>
                 <% end %>
               </div>
 
@@ -43,6 +43,9 @@
     <% end %>
 
   </div>
-  <%= paginate @movies %>
+
+  <div class="mt-5">
+    <%= paginate @movies %>
+  </div>
 
 </div>

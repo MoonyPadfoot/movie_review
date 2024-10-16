@@ -31,7 +31,7 @@ class Movie < ApplicationRecord
   }
   scope :top_3_by_rating, -> {
     left_joins(:reviews)
-      .select('movies.*, COALESCE(AVG(reviews.rating), 0) AS average_rating')
+      .select("movies.id, COALESCE(AVG(reviews.rating), 0) AS average_rating")
       .group('movies.id')
       .order('average_rating DESC')
       .limit(3)

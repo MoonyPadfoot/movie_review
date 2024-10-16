@@ -10,7 +10,7 @@ class MoviesController < ApplicationController
                    .filter_by_genre(params[:genre_ids])
                    .order_by_rating
 
-    @top_movies.each { |movie| movie.define_singleton_method(:hot?) { true } }
+    @top_movies.select { |movie| movie.id }
   end
 
   def show
