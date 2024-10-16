@@ -23,15 +23,15 @@ class Movie < ApplicationRecord
   end
 
   scope :filter_by_title, ->(title) { where('title LIKE ?', "%#{title}%") if title.present? && title != "" }
-  scope :filter_by_genre, ->(genre_ids) { joins(:genres).where(genres: { id: genre_ids }) if genre_ids.present? }
+  scope :filter_by_genre, ->(genre_ids) { joins(:genres).where(genres: { id: genre_ids }).select('movies.*, group_concat(DISTINCT genres.name) AS genre_names') if genre_ids.present? && genre_ids.length > 1 }
   scope :filter_by_status, ->(status) {
     case status
     when "SHOWING"
-      where("CURRENT_DATE BETWEEN showing_start AND showing_end")
+      where("? BETWEEN showing_start AND showing_end", Time.current)
     when "SOON"
-      where("CURRENT_DATE < showing_start")
+      where("? < showing_start", Time.current)
     when "SCREENED"
-      where("CURRENT_DATE > showing_end")
+      where("? >= showing_end", Time.current)
     end
   }
   scope :order_by_rating, -> {

@@ -1,6 +1,7 @@
 <div class="container py-3 px-5">
   <%= render 'movies/shared/filter' %>
-  <div class="row row-cols-4 g-4">
+  <%= link_to "Create new movie", new_movie_path, class: "btn btn-success mb-3" %>
+  <div class="row row-cols-3 g-4">
 
     <% @movies.each do |movie| %>
 
@@ -17,11 +18,20 @@
                 <% end %>
               </div>
 
-              <% movie.genres.each do |genre| %>
-                <div class="d-inline">
-                  <span class="badge bg-primary"><%= genre.name %></span>
-                </div>
+              <% if movie[:genre_names] %>
+                <% movie[:genre_names].split(',').each do |genre_name| %>
+                  <div class="d-inline">
+                    <span class="badge bg-primary"><%= genre_name.strip %></span>
+                  </div>
+                <% end %>
+              <% else %>
+                <% movie.genres.each do |genre| %>
+                  <div class="d-inline">
+                    <span class="badge bg-primary"><%= genre.name %></span>
+                  </div>
+                <% end %>
               <% end %>
+
             </div>
             <hr class="mb-2 mt-0">
             <div>
@@ -36,6 +46,14 @@
               <p class="fw-semibold mb-0 d-inline">Screening Span:</p>
               <p class="mb-0"><%= movie.showing_start.strftime("%B %d") + ' - ' + movie.showing_end.strftime("%B %d, %Y") %></p>
             </div>
+            <% if user_signed_in? && movie.user == current_user %>
+              <div class="mx-auto mt-2">
+                <%= form_with url: movie_path(movie), method: :delete, class: 'd-inline' do |form| %>
+                  <%= form.hidden_field :page, value: params[:page] %>
+                  <%= form.submit 'Delete', class: 'btn btn-sm btn-danger' %>
+                <% end %>
+              </div>
+            <% end %>
           </div>
         <% end %>
       </div>
