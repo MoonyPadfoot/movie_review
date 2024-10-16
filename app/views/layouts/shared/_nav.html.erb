@@ -13,13 +13,17 @@
           <%= link_to 'Profile', edit_user_registration_path, class: "nav-link #{ controller_name == 'registrations' ? 'active' : ''}", 'aria-current': 'page' %>
         </li>
       </ul>
-      <% if user_signed_in? %>
-        <ul class="ms-auto">
+      <ul class="navbar-nav ms-auto">
+        <% if user_signed_in? %>
           <li class="nav-item">
             <%= button_to 'Logout', destroy_user_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "btn btn-danger" %>
           </li>
-        </ul>
-      <% end %>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'Sign in', user_session_path, class: "nav-link", 'aria-current': 'page' %>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </div>
 </nav>
