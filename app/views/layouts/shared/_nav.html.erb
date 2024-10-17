@@ -15,6 +15,9 @@
       </ul>
       <ul class="navbar-nav ms-auto">
         <% if user_signed_in? %>
+          <li class="nav-item my-auto">
+            <span class="fw-bold text-white mx-3"><%= current_user.username %></span>
+          </li>
           <li class="nav-item">
             <%= button_to 'Logout', destroy_user_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "btn btn-danger" %>
           </li>
