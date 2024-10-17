@@ -3,12 +3,13 @@ class MoviesController < ApplicationController
 
   def index
     @top_movies = Movie.top_3_by_rating
-    @movies = Movie.includes(:genres)
+    @movies = Movie.all
+                   .includes(:genres)
                    .order_by_rating
                    .filter_by_title(params[:title])
                    .filter_by_status(params[:status])
                    .filter_by_genre(params[:genre_ids])
-                   .page(params[:page]).per(1)
+                   .page(params[:page]).per(3)
   end
 
   def show
@@ -47,7 +48,7 @@ class MoviesController < ApplicationController
   def destroy
     @movie.destroy
     flash[:notice] = 'Movie deleted successfully'
-    redirect_to movie_path(@movie)
+    redirect_to movies_path(page: params[:page])
   end
 
   private
