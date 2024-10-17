@@ -14,7 +14,7 @@
             <% end %>
             <div>
               <p class="fw-semibold mb-0 d-inline">Rating:</p>
-              <p class="mb-0 d-inline"><%=  @movie.reviews.average(:rating) || 'no reviews available' %></p>
+              <p class="mb-0 d-inline"><%= @movie.average_rating %></p>
             </div>
           </div>
 

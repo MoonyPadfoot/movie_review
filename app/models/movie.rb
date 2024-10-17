@@ -1,9 +1,19 @@
 class Movie < ApplicationRecord
   default_scope { where(deleted_at: nil) }
   before_save :generate_slug
+  after_save :update_movie_average_rating
+  after_destroy :update_movie_average_rating
 
   def to_param
     slug
+  end
+
+  def average_rating
+    reviews.average(:rating) || 0
+  end
+
+  def destroy
+    update(deleted_at: Time.current)
   end
 
   validates :title, presence: true, length: { minimum: 3 }, uniqueness: true
@@ -17,10 +27,6 @@ class Movie < ApplicationRecord
   has_many :genres, through: :movie_genre_ships
   has_many :reviews, dependent: :destroy
   belongs_to :user
-
-  def destroy
-    update(deleted_at: Time.current)
-  end
 
   scope :filter_by_title, ->(title) { where('title LIKE ?', "%#{title}%") if title.present? && title != "" }
   scope :filter_by_genre, ->(genre_ids) { joins(:genres).where(genres: { id: genre_ids }).select('movies.*, group_concat(DISTINCT genres.name) AS genre_names') if genre_ids.present? && genre_ids.length > 1 }
@@ -54,6 +60,10 @@ class Movie < ApplicationRecord
     begin
       self.slug = SecureRandom.urlsafe_base64(5)
     end while Movie.exists?(slug: slug)
+  end
+
+  def update_movie_average_rating
+    movie.update(average_rating: movie.average_rating)
   end
 
 end
