@@ -46,7 +46,6 @@ class Movie < ApplicationRecord
   scope :top_3_by_rating, -> {
     left_joins(:reviews)
       .select("movies.id, movies.average_rating")
-      .group('movies.id')
       .order('average_rating DESC')
       .limit(3)
   }
