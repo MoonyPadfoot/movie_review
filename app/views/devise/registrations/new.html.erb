@@ -2,7 +2,7 @@
   <div class="card shadow p-4 w-25">
     <h2 class="text-center">Sign up</h2>
 
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: { controller: :location }) do |f| %>
 
       <div class="row">
         <div class="col-12 field my-2">
@@ -24,6 +24,45 @@
           <% resource.errors.full_messages_for(:password_confirmation).each do |message| %>
             <div class="text-danger"><%= message %></div>
           <% end %>
+        </div>
+
+        <div class="col-12 field my-2">
+          <%= f.text_field :address, data: { location_target: 'addressId' }, autocomplete: "address", placeholder: "Address", class: "form-control" %>
+          <% resource.errors.full_messages_for(:address).each do |message| %>
+            <div class="text-danger"><%= message %></div>
+          <% end %>
+        </div>
+
+        <div class="col-12 field my-2">
+          <%= f.collection_select :address_region_id,
+                                  Address::Region.all, :id, :name,
+                                  { prompt: 'Please select region' },
+                                  data: { location_target: 'selectedRegionId', action: 'change->location#fetchProvinces change->location#updateAddress' },
+                                  autocomplete: "address", class: "form-control" %>
+        </div>
+
+        <div class="col-12 field my-2">
+          <%= f.collection_select :address_province_id,
+                                  [], nil, nil,
+                                  { prompt: 'Please select province' },
+                                  data: { location_target: 'selectedProvinceId', action: 'change->location#fetchCities' },
+                                  autocomplete: "province", class: "form-control" %>
+        </div>
+
+        <div class="col-12 field my-2">
+          <%= f.collection_select :address_city_id,
+                                  [], nil, nil,
+                                  { prompt: 'Please select city' },
+                                  data: { location_target: 'selectedCityId', action: 'change->location#fetchBarangays' },
+                                  autocomplete: "city", class: "form-control" %>
+        </div>
+
+        <div class="col-12 field my-2">
+          <%= f.collection_select :address_barangay_id,
+                                  [], nil, nil,
+                                  { prompt: 'Please select barangay' },
+                                  data: { location_target: 'selectBarangayId' },
+                                  autocomplete: "barangay", class: "form-control" %>
         </div>
 
         <div class="col-12 actions text-center my-2">

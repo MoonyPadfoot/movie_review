@@ -8,5 +8,11 @@ import HelloController from "./hello_controller"
 
 import Select2 from "./select2_controller"
 
+import TextToForm from "./text_to_form_controller"
+
+import LocationController from "./location_controller";
+
+application.register("location", LocationController)
 application.register("hello", HelloController)
 application.register("select2", Select2)
+application.register("text_to_form", TextToForm)
