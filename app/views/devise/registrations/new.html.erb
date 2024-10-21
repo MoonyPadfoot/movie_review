@@ -27,7 +27,7 @@
         </div>
 
         <div class="col-12 field my-2">
-          <%= f.text_field :address, data: { location_target: 'addressId' }, autocomplete: "address", placeholder: "Address", class: "form-control" %>
+          <%= f.text_field :address, readonly: true, data: { location_target: 'addressId' }, autocomplete: "address", placeholder: "Address", class: "form-control" %>
           <% resource.errors.full_messages_for(:address).each do |message| %>
             <div class="text-danger"><%= message %></div>
           <% end %>
@@ -45,7 +45,7 @@
           <%= f.collection_select :address_province_id,
                                   [], nil, nil,
                                   { prompt: 'Please select province' },
-                                  data: { location_target: 'selectedProvinceId', action: 'change->location#fetchCities' },
+                                  data: { location_target: 'selectedProvinceId', action: 'change->location#fetchCities change->location#updateAddress' },
                                   autocomplete: "province", class: "form-control" %>
         </div>
 
@@ -53,7 +53,7 @@
           <%= f.collection_select :address_city_id,
                                   [], nil, nil,
                                   { prompt: 'Please select city' },
-                                  data: { location_target: 'selectedCityId', action: 'change->location#fetchBarangays' },
+                                  data: { location_target: 'selectedCityId', action: 'change->location#fetchBarangays change->location#updateAddress' },
                                   autocomplete: "city", class: "form-control" %>
         </div>
 
@@ -61,7 +61,7 @@
           <%= f.collection_select :address_barangay_id,
                                   [], nil, nil,
                                   { prompt: 'Please select barangay' },
-                                  data: { location_target: 'selectBarangayId' },
+                                  data: { location_target: 'selectBarangayId', action: 'change->location#updateAddress' },
                                   autocomplete: "barangay", class: "form-control" %>
         </div>
 

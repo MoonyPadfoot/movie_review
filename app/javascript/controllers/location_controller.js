@@ -4,15 +4,40 @@ export default class extends Controller {
     static targets = ['selectedRegionId', 'selectedProvinceId', 'selectedCityId', 'selectBarangayId', 'addressId']
 
     updateAddress() {
-        let target = this.addressIdTarget
+        let address = this.addressIdTarget
         let region = this.selectedRegionIdTarget
-        let province = this.selectedRegionIdTarget
-        let city = this.selectedRegionIdTarget
-        let barangay = this.selectedRegionIdTarget
+        let province = this.selectedProvinceIdTarget
+        let city = this.selectedCityIdTarget
+        let barangay = this.selectBarangayIdTarget
 
-        let selectedOption = this.dropdownTarget.options[region.selectedIndex];
-        let selectedText = $(selectedOption).text();
-        console.log(selectedText)
+        let selectedRegionOption = region.options[region.selectedIndex];
+        let selectedRegion = $(selectedRegionOption).text();
+
+        let selectedProvinceOption = province.options[province.selectedIndex];
+        let selectedProvince = $(selectedProvinceOption).text();
+
+        let selectedCityOption = city.options[city.selectedIndex];
+        let selectedCity = $(selectedCityOption).text();
+
+        let selectedBarangayOption = barangay.options[barangay.selectedIndex];
+        let selectedBarangay = $(selectedBarangayOption).text();
+
+        console.log(selectedRegion)
+        console.log(selectedProvince)
+        console.log(selectedCity)
+        console.log(selectedBarangay)
+
+        if (selectedRegion !== 'Please select region')
+            address.value = selectedRegion
+
+        if (selectedProvince !== 'Please select province')
+            address.value += ', ' + selectedProvince
+
+        if (selectedCity !== 'Please select city')
+            address.value += ', ' + selectedCity
+
+        if (selectedBarangay !== 'Please select barangay')
+            address.value += ', ' + selectedBarangay
     }
 
     fetchProvinces() {
