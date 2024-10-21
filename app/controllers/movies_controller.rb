@@ -38,7 +38,7 @@ class MoviesController < ApplicationController
   def update
     if @movie.update(movie_params)
       flash[:notice] = 'Movie updated successfully!'
-      redirect_to movies_path
+      redirect_to movies_path(page: params[:movie][:page])
     else
       flash.now[:alert] = 'Movie update failed'
       render :edit, status: :unprocessable_entity
