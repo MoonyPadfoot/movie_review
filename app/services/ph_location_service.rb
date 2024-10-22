@@ -49,6 +49,10 @@ class PhLocationService
                                 Address::Province.find_by_code(city['districtCode'])
                               elsif city['provinceCode']
                                 Address::Province.find_by_code(city['provinceCode'])
+                              elsif city['name'] == 'City of Isabela'
+                                address_city.province = Address::Province.find_by_code('150700000')
+                              elsif city['name'] == 'City of Cotabato'
+                                address_city.province = Address::Province.find_by_code('124700000')
                               end
       address_city.save
     end
@@ -56,13 +60,16 @@ class PhLocationService
 
   def fetch_barangays
     request = RestClient.get("#{url}/barangays/")
+    count = 0
     barangays = JSON.parse(request.body)
     barangays.each do |barangay|
-      city_code = barangay['cityCode'] ? barangay['cityCode'] : barangay['municipalityCode']
-      address_barangay = Address::Barangay.find_or_initialize_by(code: barangay['code'])
-      address_barangay.name = barangay['name']
-      address_barangay.city = Address::City.find_by(code: city_code)
-      address_barangay.save
+      count += 1
+      # city_code = barangay['cityCode'] ? barangay['cityCode'] : barangay['municipalityCode']
+      # address_barangay = Address::Barangay.find_or_initialize_by(code: barangay['code'])
+      # address_barangay.name = barangay['name']
+      # address_barangay.city = Address::City.find_by(code: city_code)
+      # address_barangay.save
     end
+    puts count
   end
 end
