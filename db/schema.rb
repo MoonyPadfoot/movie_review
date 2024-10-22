@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_18_022120) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_22_033505) do
   create_table "address_barangays", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "city_id"
     t.string "code"
@@ -85,6 +85,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_18_022120) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.index ["movie_id"], name: "index_reviews_on_movie_id"
+    t.index ["user_id", "movie_id"], name: "index_reviews_on_user_id_and_movie_id", unique: true
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 

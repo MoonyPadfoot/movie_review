@@ -3,6 +3,7 @@ class Review < ApplicationRecord
 
   validates :content, presence: true, length: { minimum: 20 }
   validates :rating, presence: true, numericality: { only_integer: true, in: 1..5 }
+  validates :user_id, uniqueness: { scope: :movie_id, message: "can only review a movie once" }
 
   belongs_to :user
   belongs_to :movie

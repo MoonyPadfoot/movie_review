@@ -13,7 +13,7 @@ class ReviewsController < ApplicationController
       flash[:notice] = 'Comment created successfully'
       redirect_to movie_path(@movie)
     else
-      render 'movies/show'
+      redirect_to @review.movie, alert: @review.errors.full_messages.join(", ")
     end
   end
 
