@@ -4,14 +4,30 @@
     <%= link_to edit_movie_review_path(@movie, review), class: "text-decoration-none" do %>
       <div>
         <p class="fw-semibold mb-0"><%= review.user.username %></p>
-        <p><%= review.rating %>/5</p>
+        <% 5.times do |i| %>
+          <% if review.rating >= i + 1 %>
+            <i class="bi bi-star-fill" style="color: gold;"></i>
+          <% elsif review.rating > i %>
+            <i class="bi bi-star-half" style="color: gold;"></i>
+          <% else %>
+            <i class="bi bi-star" style="color: gold;"></i>
+          <% end %>
+        <% end %>
         <p><%= review.content %></p>
       </div>
     <% end %>
   <% else %>
     <div>
       <p class="fw-semibold mb-0"><%= review.user.username %></p>
-      <p><%= review.rating %>/5</p>
+      <% 5.times do |i| %>
+        <% if review.rating >= i + 1 %>
+          <i class="bi bi-star-fill" style="color: gold;"></i>
+        <% elsif review.rating > i %>
+          <i class="bi bi-star-half" style="color: gold;"></i>
+        <% else %>
+          <i class="bi bi-star" style="color: gold;"></i>
+        <% end %>
+      <% end %>
       <p><%= review.content %></p>
     </div>
   <% end %>
