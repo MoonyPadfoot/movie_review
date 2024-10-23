@@ -7,7 +7,8 @@
 
       <div class="col">
         <%= link_to movie, class: "text-decoration-none text-dark" do %>
-          <div class="card shadow p-4 h-100">
+          <div class="card shadow p-4 h-100 d-flex flex-column justify-content-between">
+
             <div class="card-body text-center">
               <h3 class="card-title text-center"><%= movie.title %></h3>
               <h6 class="card-subtitle mt-2 text-body-secondary text-center mb-2"><%= movie.blurb %></h6>
@@ -31,31 +32,33 @@
                   </div>
                 <% end %>
               <% end %>
-
-            </div>
-            <hr class="mb-2 mt-0">
-            <div>
-              <p class="fw-semibold mb-0 d-inline">Country:</p>
-              <p class="mb-0 d-inline"><%= movie.country_of_origin %></p>
-            </div>
-            <div>
-              <p class="fw-semibold mb-0 d-inline">Date Released:</p>
-              <p class="mb-0 d-inline"><%= movie.date_released.strftime("%B %d, %Y") %></p>
-            </div>
-            <div>
-              <p class="fw-semibold mb-0 d-inline">Screening Span:</p>
-              <p class="mb-0"><%= movie.showing_start.strftime("%B %d") + ' - ' + movie.showing_end.strftime("%B %d, %Y") %></p>
             </div>
 
-            <% if user_signed_in? && movie.user == current_user %>
+            <div>
+              <hr class="my-3">
 
-              <%= link_to "Edit", edit_movie_path(movie, page: params[:page]), class: "btn btn-warning my-2" %>
-              <%= form_with url: movie_path(movie), method: :delete, class: 'd-inline w-100' do |form| %>
-                <%= form.hidden_field :page, value: params[:page] %>
-                <%= form.submit 'Delete', class: 'btn btn-sm btn-danger w-100' %>
+              <div>
+                <p class="fw-semibold mb-0 d-inline">Country:</p>
+                <p class="mb-0 d-inline"><%= movie.country_of_origin %></p>
+              </div>
+              <div>
+                <p class="fw-semibold mb-0 d-inline">Date Released:</p>
+                <p class="mb-0 d-inline"><%= movie.date_released.strftime("%B %d, %Y") %></p>
+              </div>
+              <div>
+                <p class="fw-semibold mb-0 d-inline">Screening Span:</p>
+                <p class="mb-0"><%= movie.showing_start.strftime("%B %d") + ' - ' + movie.showing_end.strftime("%B %d, %Y") %></p>
+              </div>
+
+              <% if user_signed_in? && movie.user == current_user %>
+                <%= link_to "Edit", edit_movie_path(movie, page: params[:page]), class: "btn btn-sm btn-warning my-2 w-100" %>
+                <%= form_with url: movie_path(movie), method: :delete, class: 'd-inline w-100' do |form| %>
+                  <%= form.hidden_field :page, value: params[:page] %>
+                  <%= form.submit 'Delete', class: 'btn btn-sm btn-danger w-100' %>
+                <% end %>
               <% end %>
+            </div>
 
-            <% end %>
           </div>
         <% end %>
       </div>
